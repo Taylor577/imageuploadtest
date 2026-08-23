@@ -1,13 +1,27 @@
-﻿{
+{
   "name": "imageuploader",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
+  "description": "Minimal Node.js app to upload images to a Railway storage bucket (S3-compatible).",
+  "main": "server.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Taylor577/imageuploadtest.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Taylor577/imageuploadtest/issues"
+  },
+  "homepage": "https://github.com/Taylor577/imageuploadtest#readme",
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.0.0",
-    "express": "^4.18.2",
-    "multer": "^1.4.5"
+    "@aws-sdk/client-s3": "^3.1116.0",
+    "express": "^5.2.1",
+    "multer": "^2.2.0"
   }
 }
