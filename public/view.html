@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="/view.css">
+    <meta charset="utf-8" />
+    <title>Image</title>
+    <style>
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .meta {
+            margin-top: 0.5rem;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #444;
+            word-break: break-all;
+            text-align: center;
+        }
+
+        
+    </style>
+</head>
+
+<body>
+    <nav>
+
+        <a href="gallery.html">Gallery</a>
+        <a href="taglist.html">Tags</a>
+        <a href="upload.html">Upload</a>
+
+        <a href="./">Home</a>
+        <a href="blocked.html">Blocked</a>
+        <a href="photos.html">Photos</a>
+        <a href="index.html">Upload (temp real)</a>
+
+    </nav>
+    <div class="container">
+
+        <div class="singleimage">
+            <img id="image" />
+            <div class="meta" id="meta"></div>
+        </div>
+        <div id="tags"></div>
+
+
+        <div class="split">
+            <div class="gallerylink">
+                <a href="gallery.html">Back to Gallery</a>
+            </div>
+
+            <button id="deleteButton">Delete Image</button>
+
+        </div>
+
+    </div>
+    <script>
+        // Read ?id=... from the URL
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get("id");
+
+        if (!id) {
+            document.body.innerHTML = "<p>Missing photo ID.</p>";
+        } else {
+            fetch(`/api/photo/${encodeURIComponent(id)}`)
+                .then(res => {
+                    if (!res.ok) throw new Error("Photo not found");
+                    return res.json();
+                })
+                .then(data => {
+                    const photo = data.photo;
+
+                    document.getElementById("image").src = photo.url;
+                    document.getElementById("image").alt = photo.key;
+
+                    const phototitle = photo.key.substring(1 + photo.key.indexOf("-"));
+
+                    document.getElementById("meta").textContent = "Title: " + phototitle;
+
+                    const tagsEl = document.getElementById("tags");
+                    tagsEl.replaceChildren();
+
+                    if (photo.tags.length) {
+                        photo.tags.forEach(tag => {
+                            const tagEl = document.createElement("individual");
+                            tagEl.textContent = tag;
+                            tagsEl.appendChild(tagEl);
+                        });
+                    } else {
+                        tagsEl.textContent = "No tags";
+                    }
+                })
+                .catch(() => {
+                    document.body.innerHTML = "<p>Could not load the photo.</p>";
+                });
+        }
+
+
+        async function deletePhoto(append = true) {
+            try {
+                const result = await fetch(`/photos/${encodeURIComponent(id)}`, {
+                    method: "DELETE"
+                });
+                if (result) {
+                    document.querySelector(".container").innerHTML = "Image deleted.";
+                } else {
+                    document.querySelector(".container").innerHTML = "Deletion failed.";
+                }
+            } catch (err) {
+                document.querySelector(".container").innerHTML = "Image could not be deleted.";
+            }
+        }
+
+        const deleteButton = document.getElementById('deleteButton');
+
+        deleteButton.addEventListener('click', () => {
+            deletePhoto();
+        });
+
+    </script>
+</body>
+
+</html>

@@ -1,24 +1,54 @@
 ﻿<!doctype html>
 <html>
+
 <head>
+  <link rel="stylesheet" href="/index.css">
   <meta charset="utf-8" />
   <title>Image Uploader Test</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 2rem; }
-    .preview { margin-top: 1rem; max-width: 400px; }
-  </style>
-</head>
-<body>
-  <h1>Upload an Image</h1>
-  <form id="uploadForm">
-    <input type="file" name="image" id="imageInput" accept="image/*" required />
-    <button type="submit">Upload</button>
-  </form>
 
-  <div id="result"></div>
+</head>
+
+<body>
+
+  <nav>
+
+    <a href="gallery.html">Gallery</a>
+    <a href="taglist.html">Tags</a>
+    <a href="upload.html"><b>Upload</b></a>
+
+    <a href="./">Home</a>
+    <a href="blocked.html">Blocked</a>
+    <a href="photos.html">Photos</a>
+    <a href="index.html">Upload (temp real)</a>
+
+  </nav>
+
+  <div class="container">
+    <h1>Upload an Image</h1>
+
+    Add tags for the image in the text box, separated by a comma.
+    The tags can be changed later.
+    A list of existing/example tags can be found at the tag page linked in the navigation bar.
+  </div>
+  <div class="buttoncontainer">
+    <form id="uploadForm">
+      <input type="file" name="image" id="imageInput" accept="image/*" required />
+      <input type="text" name="tags" id="tagInput" placeholder="ex: Fallen London, Asphyr"
+        style="margin-left: 1rem; width: 220px;" />
+      <button type="submit">Upload</button>
+    </form>
+
+    <div id="result"></div>
+
+  </div>
+
+  <div class="container">
+    <a href="gallery.html">Return to Gallery</a>
+  </div>
 
   <script>
     const form = document.getElementById('uploadForm');
+    const tagsInput = document.getElementById('tagInput');
     const result = document.getElementById('result');
 
     form.addEventListener('submit', async (e) => {
@@ -28,6 +58,7 @@
 
       const fd = new FormData();
       fd.append('image', input.files[0]);
+      fd.append('tags', tagsInput.value);
 
       result.textContent = 'Uploading...';
 
@@ -43,6 +74,10 @@
         result.textContent = 'Upload error: ' + err.message;
       }
     });
+
+
+
   </script>
 </body>
+
 </html>

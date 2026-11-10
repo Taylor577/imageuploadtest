@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+<head>
+  <link rel="stylesheet" href="/gallery.css">
+  <meta charset="utf-8" />
+  <title>Gallery</title>
+</head>
+<body>
+  
+            <nav>
+
+                <a href="gallery.html">Gallery</a>
+                <a href="taglist.html">Tags</a>
+                <a href="upload.html">Upload</a>
+
+                <a href="./">Home</a>
+                <a href="blocked.html">Blocked</a>
+                <a href="photos.html">Photos</a>
+                <a href="index.html">Upload (temp real)</a>
+
+            </nav>
+            <div class="split">
+                <div class="filter">
+                    <div class="filtertags">
+                        <div class="filterexplanation">
+                            To search for images with specific criteria, select the tags below.
+                        </div>
+                        <div class="taggroup">
+                            Test group 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Story tags.
+                        </div>
+                        <div class="taggroup">
+                            Test group 2. Character tags.
+                        </div>
+                        <div class="taggroup">
+                            Test group 3. Ship tags.
+                        </div>
+                        <div class="taggroup">
+                            Test group 4. Specific AU tags.
+                        </div>
+                        <div class="taggroup">
+                            Test group 5. Canon/fanon and digital/traditional. Meme tag(?).
+                        </div>
+                        <div class="taggroup">
+                            Test group 6. Artist tags.
+                        </div>
+                        <div class="taggroup">
+                            Filter x to y date
+                            <br />
+                            Sort by newest/oldest
+                        </div>
+                        <div class="taggroup">
+                            Insert search button here
+                        </div>
+
+                    </div>
+                  </div>
+                <div class="galleryblock">
+                    <div class="galleryimages">
+                        <h2>Gallery</h2>
+<div id="gallery"></div>
+<button id="loadMore" style="display:none">Load more</button>
+
+                    </div>
+                </div>
+            </div>
+        
+  
+
+
+
+  <script>
+    
+
+
+    const gallery = document.getElementById('gallery');
+const loadMoreBtn = document.getElementById('loadMore');
+let nextToken = null;
+
+async function loadImages(append = true) {
+  try {
+    const params = new URLSearchParams();
+    params.set('maxKeys', '50');
+    if (nextToken) params.set('continuationToken', nextToken);
+
+    const resp = await fetch('/images?' + params.toString());
+    const data = await resp.json();
+    if (!data.success) {
+      console.error('Failed to list images', data);
+      return;
+    }
+
+    if (!append) gallery.innerHTML = '';
+
+    data.items.forEach(item => {
+      const wrapper = document.createElement('div');
+      wrapper.style.width = '200px';
+      wrapper.style.textAlign = 'center';
+
+      const img = document.createElement('img');
+      img.src = item.url;
+      img.alt = item.key;
+      img.style.maxWidth = '100%';
+      img.style.height = 'auto';
+      img.loading = 'lazy';
+
+      const caption = document.createElement('div');
+      caption.textContent = item.key;
+      caption.style.fontSize = '12px';
+      caption.style.wordBreak = 'break-all';
+
+      /*
+      wrapper.appendChild(img);
+      wrapper.appendChild(caption);
+      gallery.appendChild(wrapper);
+      */
+     // Wrap image in a link to the view page so clicking opens the full-size image
+        const link = document.createElement('a');
+        link.href = '/view.html?key=' + encodeURIComponent(item.key);
+        link.target = '_self';
+        link.appendChild(img);
+
+        wrapper.appendChild(link);
+        wrapper.appendChild(caption);
+        gallery.appendChild(wrapper);
+    });
+
+    if (data.isTruncated && data.nextContinuationToken) {
+      nextToken = data.nextContinuationToken;
+      loadMoreBtn.style.display = 'inline-block';
+    } else {
+      nextToken = null;
+      loadMoreBtn.style.display = 'none';
+    }
+  } catch (err) {
+    console.error('Error loading images', err);
+  }
+}
+
+loadMoreBtn.addEventListener('click', () => loadImages(true));
+
+// Call after page load and after successful upload
+loadImages();
+  </script>
+</body>
+</html>

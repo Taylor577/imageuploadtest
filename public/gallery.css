@@ -1,0 +1,82 @@
+body {
+  background-color: #eee;
+}
+
+nav {
+    background-color: #333;
+    padding: 10px;
+    z-index: 2;
+}
+
+nav a {
+    color: white;
+    margin-right: 20px;
+    font-family: Arial, sans-serif;
+}
+
+nav a:hover {
+    color: lightblue;
+}
+
+.split {
+  display: flex;
+}
+
+.filter {
+  float: left;
+  width: 15%;
+  background-color: #ccc;
+  min-height: 100vh;
+}
+
+.filtertags {
+  padding: 5px;
+  padding-top: 20px;
+}
+
+.taggroup {
+  padding: 10px;
+  margin-top: 5px;
+  background-color: #ddd;
+  
+}
+
+.filterexplanation {
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+#gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: flex-start;
+} 
+
+.galleryblock {
+  float: right;
+  width: 85%;
+}
+
+.galleryimages {
+  padding: 20px;
+}
+
+.singleimage {
+  margin: 20px;
+}
+
+.wrapperstyle {
+    width: 200px;
+    text-align: center;
+}
+
+.imgstyle {
+    max-width: 100%;
+    height: auto;
+}
+
+.captionstyle {
+    font-size: 12px;
+    word-break: break-all;
+}

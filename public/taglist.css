@@ -1,0 +1,50 @@
+body {
+    background-color: #eee;
+    min-height: 100vh;
+}
+
+nav {
+    background-color: #333;
+    padding: 10px;
+    z-index: 2;
+}
+
+nav a {
+    color: white;
+    margin-right: 20px;
+    font-family: Arial, sans-serif;
+}
+
+nav a:hover {
+    color: lightblue;
+}
+
+.explanationcontainer {
+    background-color: #ccc;
+    padding: 5px;
+}
+
+.explanation {
+    margin: 5px;
+    padding: 5px;
+}
+
+.column {
+    float: left;
+    width: 13%;
+    border: 2px solid #555;
+    min-height: 60vh;
+    padding: 5px;
+    font-size: 18px;
+}
+
+.columnlist {
+    font-size: 15px;
+    margin-top: 5px;
+}
+
+.listtitle {
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}

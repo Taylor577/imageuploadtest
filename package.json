@@ -21,7 +21,9 @@
   "homepage": "https://github.com/Taylor577/imageuploadtest#readme",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1116.0",
+    "@aws-sdk/s3-request-presigner": "^3.1116.0",
     "express": "^5.2.1",
-    "multer": "^2.2.0"
+    "multer": "^2.2.0",
+    "pg": "^8.23.0"
   }
 }
